@@ -1,0 +1,24 @@
+:root{
+    /* IMPORTS */
+    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+    /* COLORS */
+    --background-color: #1E1E1E;
+    --aux_colors: #16B743;
+
+    /* FONTS */
+    --font_title: "Oswald", sans-serif;
+    --font_subtitle: "Roboto Mono", monospace;
+
+}
+
+
+body {
+    background: var(--background-color);
+    font-family: var(--font_title);
+    color: var(--aux_colors);
+}
+
+h3{
+    font-family: var(--font_subtitle) ;
+}

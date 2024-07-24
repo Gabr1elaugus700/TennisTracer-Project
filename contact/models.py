@@ -23,7 +23,7 @@ class Aluno(models.Model):
     picture = models.ImageField(blank=True, upload_to='pictures/%Y/%m/%d')
     category = models.CharField(max_length=50, blank=True)
     owner = models.ForeignKey(
-        User,
+        User, 
         on_delete=models.SET_NULL,
         blank=True, null=True
     )
@@ -32,8 +32,8 @@ class Aluno(models.Model):
         return f'{self.id} {self.first_name} {self.last_name}'
 
 class Aluno_Aula(models.Model):
-    aula = models.ForeignKey(Aula, on_delete=models.SET_NULL, null=True)  # Corrigido para permitir NULL
-    aluno = models.ForeignKey(Aluno, on_delete=models.SET_NULL, null=True)  # Corrigido para permitir NULL
+    aula = models.ForeignKey(Aula, on_delete=models.SET_NULL, null=True)  
+    aluno = models.ForeignKey(Aluno, on_delete=models.SET_NULL, null=True)
 
     def __str__(self) -> str:
         return f'{self.id} {self.aula} {self.aluno}'
