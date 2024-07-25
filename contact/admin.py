@@ -4,7 +4,7 @@ from contact import models
 # Register your models here.
 @admin.register(models.Aluno)
 class AlunoAdmin(admin.ModelAdmin):
-    list_display = 'id', 'first_name', 'last_name',
+    list_display = 'id', 'first_name', 'last_name', 'picture',
     ordering = 'id',
 
 @admin.register(models.Aula)

@@ -1,0 +1,33 @@
+{% extends "global/base.html" %} 
+
+
+{% block content %}
+
+    <main class="content">
+        <div class="nameDay">
+            <h1> < SEGUNDA > </h1>
+        </div>
+        <div class="aulaHora">
+            <div class="card card-LightGreen">
+                <h1 class="title">8hrs às 9hrs</h1>
+                    {% for person in alunos_aula %}
+                        <div class="aluno-Card">    
+                            <div class="aluno-Foto">
+                                <p>
+                                    <img src="{{ person.aluno.picture.url }} " alt="{{ person.aluno.nome }}"/>
+                                </p>
+                            </div>
+                            <div class="aluno-Nome">{{ person.aluno.last_name }}</div> 
+                        </div>
+                    {% endfor %}
+            </div>
+
+            <div class="card card-DarkGreen">
+                <h1 class="title">9hrs às 10hrs</h1>
+            </div>
+        </div>
+    </main>
+
+{% endblock content %}
+
+

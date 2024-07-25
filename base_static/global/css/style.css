@@ -4,7 +4,8 @@
 
     /* COLORS */
     --background-color: #1E1E1E;
-    --aux_colors: #16B743;
+    --dark-Green: #16B743;
+    --light-Green: #B1EBC2;
 
     /* FONTS */
     --font_title: "Oswald", sans-serif;
@@ -12,13 +13,56 @@
 
 }
 
-
 body {
     background: var(--background-color);
     font-family: var(--font_title);
     color: var(--aux_colors);
+    padding: 10%;
 }
 
-h3{
-    font-family: var(--font_subtitle) ;
+.nameDay {
+    color: var(--dark-Green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    width: 100%;
+    border-radius: 8px;
+    color: var(--background-color);
+    text-align: center;
+    align-items: center;
+    font-family: var(--font_title);
+
+}
+
+.card-DarkGreen {
+    background-color: var(--dark-Green);
+}
+
+.card-LightGreen {
+    background-color: var(--light-Green);
+}
+
+.title {
+    align-items: center;
+    justify-content: center;
+    padding-top: 15px;
+}
+
+.aluno-Card {
+    margin: 10px 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: rebeccapurple;
+
+}
+
+img {
+    border-radius: 50px;
+    width: 100px;
+    height: 100PX;
 }

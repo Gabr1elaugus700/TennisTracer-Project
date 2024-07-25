@@ -20,7 +20,7 @@ class Aluno(models.Model):
     created_in = models.DateTimeField(default=timezone.now)
     obs = models.TextField(blank=True)
     show = models.BooleanField(default=True)
-    picture = models.ImageField(blank=True, upload_to='pictures/%Y/%m/%d')
+    picture = models.ImageField(blank=True, upload_to='pictures/')
     category = models.CharField(max_length=50, blank=True)
     owner = models.ForeignKey(
         User, 
@@ -29,7 +29,7 @@ class Aluno(models.Model):
     )
 
     def __str__(self) -> str:
-        return f'{self.id} {self.first_name} {self.last_name}'
+        return f'{self.first_name} {self.last_name}'
 
 class Aluno_Aula(models.Model):
     aula = models.ForeignKey(Aula, on_delete=models.SET_NULL, null=True)  
