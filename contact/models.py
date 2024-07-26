@@ -10,6 +10,12 @@ class Aula(models.Model):
     def __str__(self) -> str:
         return f'{self.id} {self.day} {self.hora_ini}'
 
+class Coach(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self) -> str:
+        return f'{self.name}'
+    
 class Aluno(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -27,9 +33,16 @@ class Aluno(models.Model):
         on_delete=models.SET_NULL,
         blank=True, null=True
     )
+    coach = models.ForeignKey(
+        Coach, 
+        on_delete=models.SET_NULL,
+        blank=True, null=True
+    )
 
     def __str__(self) -> str:
         return f'{self.first_name} {self.last_name}'
+
+
 
 class Aluno_Aula(models.Model):
     aula = models.ForeignKey(Aula, on_delete=models.SET_NULL, null=True)  

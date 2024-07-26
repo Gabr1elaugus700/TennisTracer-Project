@@ -1,2 +1,2 @@
 ##### ADICIONAR TODOS NOVOS ARQUIVOS AQUI #####
-from .day import *
+from .alunos import *

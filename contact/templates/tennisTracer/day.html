@@ -10,16 +10,19 @@
         <div class="aulaHora">
             <div class="card card-LightGreen">
                 <h1 class="title">8hrs às 9hrs</h1>
-                    {% for person in alunos_aula %}
+                    
                         <div class="aluno-Card">    
+                            {% for person in alunos_aula %}
                             <div class="aluno-Foto">
-                                <p>
+                                
                                     <img src="{{ person.aluno.picture.url }} " alt="{{ person.aluno.nome }}"/>
-                                </p>
+                                
+                                    <div class="aluno-Nome">{{ person.aluno.last_name }}</div> 
+                                   
                             </div>
-                            <div class="aluno-Nome">{{ person.aluno.last_name }}</div> 
+                            {% endfor %}
                         </div>
-                    {% endfor %}
+                    
             </div>
 
             <div class="card card-DarkGreen">

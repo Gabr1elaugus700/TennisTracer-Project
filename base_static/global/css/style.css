@@ -31,6 +31,8 @@ body {
     width: 100%;
     border-radius: 8px;
     color: var(--background-color);
+    display: flex;
+    flex-direction: column;
     text-align: center;
     align-items: center;
     font-family: var(--font_title);
@@ -39,30 +41,47 @@ body {
 
 .card-DarkGreen {
     background-color: var(--dark-Green);
+
 }
 
 .card-LightGreen {
     background-color: var(--light-Green);
 }
 
+
 .title {
     align-items: center;
     justify-content: center;
-    padding-top: 15px;
+    background-color: #16B743;
 }
 
-.aluno-Card {
-    margin: 10px 0;
-    width: 100%;
+.aluno-Card{
     display: flex;
     align-items: center;
-    flex-direction: column;
-    background-color: rebeccapurple;
-
+    flex-direction: row;
+    padding: 10px;
 }
 
+.aluno-Foto {
+    display: flex;  
+    align-items: center; 
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    flex-direction: column;
+    padding: 10px;
+    width: 60%;
+    height: 80%;
+    background-color: #16B743;
+    
+}
+
+.aluno-Nome{
+    font-family: var(--font_subtitle);
+}
+
+.aulaHora
 img {
     border-radius: 50px;
-    width: 100px;
-    height: 100PX;
+    width: 50px;
+    height: 50px;
 }
