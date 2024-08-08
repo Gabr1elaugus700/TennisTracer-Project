@@ -4,7 +4,7 @@ from contact import models
 # Register your models here.
 @admin.register(models.Aluno)
 class AlunoAdmin(admin.ModelAdmin):
-    list_display = 'id', 'first_name', 'last_name', 'coach', 'picture',
+    list_display = 'id', 'first_name', 'last_name', 'coach', 'picture', 
     ordering = 'id',
 
 @admin.register(models.Coach)
@@ -14,7 +14,7 @@ class CoachAdmin(admin.ModelAdmin):
 
 @admin.register(models.Aula)
 class AulaAdmin(admin.ModelAdmin):
-    list_display = 'id', 'day', 'hora_ini', 'hora_fim',
+    list_display = 'id', 'day', 'hora_ini', 'hora_fim', 'coach',
     ordering = '-id',
 
 @admin.register(models.Aluno_Aula)

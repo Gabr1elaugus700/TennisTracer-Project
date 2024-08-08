@@ -2,13 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-class Aula(models.Model):
-    day = models.CharField(max_length=50)
-    hora_ini = models.TimeField()
-    hora_fim = models.TimeField()
-    
-    def __str__(self) -> str:
-        return f'{self.id} {self.day} {self.hora_ini}'
+
 
 class Coach(models.Model):
     name = models.CharField(max_length=50)
@@ -42,7 +36,18 @@ class Aluno(models.Model):
     def __str__(self) -> str:
         return f'{self.first_name} {self.last_name}'
 
-
+class Aula(models.Model):
+    day = models.CharField(max_length=50)
+    hora_ini = models.TimeField()
+    hora_fim = models.TimeField()
+    coach = models.ForeignKey(
+        Coach, 
+        on_delete=models.SET_NULL,
+        blank=True, null=True
+    )
+    
+    def __str__(self) -> str:
+        return f'{self.id} {self.day} {self.hora_ini} {self.coach} '
 
 class Aluno_Aula(models.Model):
     aula = models.ForeignKey(Aula, on_delete=models.SET_NULL, null=True)  
