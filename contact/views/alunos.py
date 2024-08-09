@@ -6,21 +6,22 @@ from django.core.paginator import Paginator
 def index(request):
     title = 'Aulas'
 
-    aulas = Aula.objects.filter(coach=1) 
+    # Obter as aulas do coach específico
+    aulas = Aula.objects.filter(coach=1)
 
+    # Paginar as aulas
     paginator = Paginator(aulas, 9)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    alunos_aula = Aluno_Aula.objects.all()
+    # Contexto atualizado para passar os alunos relacionados a cada aula
     context = {
         'title': title,
-        'alunos_aula': alunos_aula,
-        'page_obj': page_obj
+        'page_obj': page_obj,
     }
 
     return render(
-        request, 
+        request,
         'tennisTracer/day.html',
         context,
     )

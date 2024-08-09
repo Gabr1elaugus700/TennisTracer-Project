@@ -8,7 +8,7 @@
             {% if page_obj.has_previous %}
                 <a href="?page={{ page_obj.previous_page_number }}">&#9664;</a>
             {% else %}
-                <span class="disabled">&#9664; </span>
+                <span class="disabled">&#9664;</span>
             {% endif %}
         </div>
         <div class="nameDay">
@@ -18,7 +18,7 @@
         </div>
         <div class="pagination-right">
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}"> &#9654;</a>
+                <a href="?page={{ page_obj.next_page_number }}">&#9654;</a>
             {% else %}
                 <span class="disabled">&#9654;</span>
             {% endif %}
@@ -29,18 +29,19 @@
     <div class="aula-Hora">
         <div class="card">
             <h1 class="title"> {{ day.hora_ini }} </h1>
-            <div class="aluno-Card">    
-                {% for person in alunos_aula %}
+            <div class="aluno-Card">
+                {% for person in day.aluno_aula_set.all %}
+                
                 <div class="aluno-Foto">
                     <img src="{{ person.aluno.picture.url }}" alt="{{ person.aluno.nome }}"/>
                     <div class="aluno-Nome">{{ person.aluno.last_name }}</div> 
                 </div>
+                {% empty %}
+                <p>Nenhum aluno inscrito nesta aula.</p>
                 {% endfor %}
             </div>
             <div class="button">
                 <button class="button-Card"> Finalizar Aula </button>
-
-            
             </div>
         </div>
     </div>
