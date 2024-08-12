@@ -21,3 +21,8 @@ class AulaAdmin(admin.ModelAdmin):
 class Aluno_AulaAdmin(admin.ModelAdmin):
     list_display = 'id', 'aula', 'aluno',
     ordering = 'id',
+
+@admin.register(models.Tema)
+class TemaAdmin(admin.ModelAdmin):
+    list_display = 'id', 'tema_name',
+    ordering = 'id',

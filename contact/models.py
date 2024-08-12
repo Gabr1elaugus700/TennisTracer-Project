@@ -55,3 +55,9 @@ class Aluno_Aula(models.Model):
 
     def __str__(self) -> str:
         return f'{self.id} {self.aula} {self.aluno}'
+
+class Tema(models.Model):
+    tema_name = models.CharField(max_length=250)
+    
+    def __str__(self) -> str:
+        return f'{self.id} {self.tema_name}'

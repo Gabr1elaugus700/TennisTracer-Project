@@ -1,0 +1,32 @@
+{% extends "global/base.html" %}
+{% block content %}
+
+<h2 class="title"> Novo tema de Aula </h2>
+
+    <form 
+    action=" {% url "tennisTracer:create" %} " 
+    method="POST"
+    enctype="multipart/form-data" 
+    >
+        {% csrf_token %}
+        
+    
+        <div class="form-content">
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {{ field.errors}}
+
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="btn">
+            <button class="button-Card" type="submit">Enviar</button>
+        </div>
+
+
+    </form>
+
+{% endblock content %}

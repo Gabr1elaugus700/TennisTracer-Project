@@ -1,14 +1,15 @@
 from django.urls import path
 from contact import views
 
-app_name = 'contact'    
+app_name = 'tennisTracer'    
 
 urlpatterns = [
-    path('index/', views.index, name='index'),
-    path('profile/<int:contact_id>/', views.profile, name='profile'),
+    path('tennisTracer/', views.index, name='index'),
+    path('tennisTracer/<int:contact_id>/', views.profile, name='profile'),
 
-    path('aulas/', views.profile, name='profile'),
+    path('tennisTracer/', views.profile, name='profile'),
     # Crud 
+    path('tennisTracer/create/', views.create, name='create'),
     # Detail: Get
     # Create: Criar 
     # Update: Atualizar
