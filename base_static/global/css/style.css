@@ -2,9 +2,9 @@
     /* IMPORTS */
     @import url('https://fonts.googleapis.com/css2?family=Jockey+One&family=Oswald:wght@200..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
     /* COLORS */
-    --background-color: #B1EBC2;
-    --black-color: #1E1E1E;
-    --dark-Green: #44CF72;
+    --background-color: #292E4C;
+    --black-color: #292E4C;
+    --dark-Green: #06DA97;
     --light-Green: #B1EBC2;
     --button: #D9D9D9;
 
@@ -26,10 +26,67 @@ body {
     color: var(--black-color);
 }
 
+/* Nav-Bar */
+.menu {
+    position: fixed; /* Fixa a navbar na tela */
+    bottom: 0; /* Posiciona a navbar na parte inferior da página */
+    width: 100%; /* Garante que a navbar ocupe toda a largura da tela */
+    height: 60px;
+    background-color: var(--dark-Green);
+    z-index: 1000; /* Garante que a navbar fique acima de outros elementos */
+    border-top: var(--black-color);
+    border: 3px;
+    
+}
+
+.menu-list {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 15px 0; 
+    padding: 0; 
+    width: 100%; 
+}
+
+li {
+    display: inline-block;
+    flex-direction: column;
+    color: var(--black-color);
+    text-decoration: none;  
+}
+
+nav ul li a {
+    color: var(--background-color);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column; /* Alinha ícone e texto verticalmente */
+    align-items: center; /* Centraliza o conteúdo horizontalmente */
+}
+
+nav ul li a i {
+    font-size: 15px;
+    transition: color 0.3s; /* Transição suave para a cor do ícone */
+}
+/* 
+li:hover{
+    background-color: var(--black-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dark-Green);
+}
+
+li a:hover{
+    color: var(--dark-Green);
+} */
+
 .container {
     width: 100%;
     max-width: 1200px; /* Ajuste conforme necessário */
-    margin: 0 auto; /* Centraliza o container */
+    margin: 0 ; /* Centraliza o container */
     padding: 20px; /* Adiciona padding para garantir espaçamento em relação à borda da página */
 }
 
@@ -44,7 +101,7 @@ body {
 .nameDay {
     font-family: var(--font_title);
     font-weight: 400;
-    color: var(--black-color);
+    color: var(--dark-Green);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -114,6 +171,7 @@ body {
 
 p{
     font-family: var(--font_subtitle);
+    font-size: smaller;
 }
 
 .button-Card {
@@ -147,4 +205,97 @@ p{
         width: calc(25% - 20px); /* Mantém 4 alunos por linha em telas muito pequenas */
         max-width: 120px; /* Mantém o tamanho máximo dos cards */
     }
+}
+
+
+.errorlist{
+    list-style: none;
+    font-family: var(--font_subtitle);
+    font-size: smaller;
+    color: tomato;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 20px;
+    margin: 20px;
+    max-width: 500px; /* Define a largura máxima do formulário */
+    background-color: var(--dark-Green); /* Cor de fundo para destacar o formulário */
+    font-family: var(--font_title);
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* Alinha os inputs em coluna */
+    align-items: center;
+    justify-content: center;
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column; /* Garante que cada label e input fiquem em coluna */
+    align-items: flex-start;
+}
+
+.form-group input,
+.form-group select {
+    width: 80%; /* Ajusta o tamanho dos inputs */
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: var(--font_subtitle);
+    font-size: 14px;
+
+}
+
+.form-group label {
+    margin-bottom: 2px;
+    font-family: var(--font_title);
+    font-size: 16px;
+    color: var(--black-color);
+}
+
+.form-group .help-text {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.form-group .field-errors {
+    color: tomato;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.button-Card {
+    width: 150px;
+    height: 40px;
+    border-radius: 8px;
+    font-family: var(--font_subtitle);
+    background: var(--button);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button-Card:hover {
+    background-color: var(--black-color);
+    color: var(--dark-Green);
 }

@@ -1,0 +1,35 @@
+{% extends "global/base.html" %}
+{% block content %}
+
+    <form 
+    action=" {% url "tennisTracer:createAluno" %} " 
+    method="POST"
+    enctype="multipart/form-data" 
+    >
+        {% csrf_token %}
+        
+    
+        <div class="form-content">
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {{ field.errors}}
+                    {% if field.help_text %}
+                        <p class="help-text"> 
+                            {{field.help_text}}
+                        </p>
+                    {% endif %}
+                </div>
+
+            {% endfor %}
+        </div>
+        
+        <div class="btn">
+            <button class="button-Card" type="submit">Enviar</button>
+        </div>
+
+
+    </form>
+
+{% endblock content %}

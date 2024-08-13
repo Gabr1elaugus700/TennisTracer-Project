@@ -26,6 +26,8 @@ def index(request):
         context,
     )
 
+
+
 def profile(request, contact_id):
     title = 'Perfil'
     aluno = get_object_or_404(Aluno, pk=contact_id)
@@ -37,7 +39,7 @@ def profile(request, contact_id):
 
     return render(
         request, 
-        'tennisTracer/createdAluno.html',
+        'tennisTracer/profileCoach.html',
         context,
     )
 
@@ -55,3 +57,17 @@ def profile(request, contact_id):
 #         'tennisTracer/createdAluno.html',
 #         context,
 #     )
+
+def profileCoach(request):
+    title = 'Perfil'
+    # aluno = get_object_or_404(Aluno, pk=contact_id)
+    # aluno = Aluno.objects.get(pk=contact_id)
+    context = {
+        'title': title,
+    }
+
+    return render(
+        request, 
+        'tennisTracer/profileCoach.html',
+        context,
+    )

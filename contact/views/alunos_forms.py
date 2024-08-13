@@ -1,41 +1,22 @@
-from django import forms
-from django.core.exceptions import ValidationError
 from contact.models import *
 from django.shortcuts import get_object_or_404, render, redirect
 from django.core.paginator import Paginator
+from contact.forms import CreateTemaAula, CreateAluno
 
-class TennisTracerForm(forms.ModelForm):
-    class Meta:
-        model = Tema
-        fields = (
-            'tema_name',
-        )
 
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        
-        self.add_error(
-            'tema_name',
-            ValidationError(
-                'Mensagem de Erro', 
-                code='invalid'
-            )
-        )
-        return super().clean()
-
-def create(request):
+def createTemaAula(request):
     if request.method == 'POST':
 
         title = 'Cadastrar Nova Aula'
 
         context = {
             'title': title,
-            'form': TennisTracerForm(request.POST)
+            'form': CreateTemaAula(request.POST)
         }
 
         return render(
             request, 
-            'tennisTracer/create.html',
+            'tennisTracer/createTemaAula.html',
             context,
         )
 
@@ -43,11 +24,40 @@ def create(request):
 
     context = {
         'title': title,
-        'form': TennisTracerForm
+        'form': CreateTemaAula
     }
 
     return render(
         request, 
-        'tennisTracer/create.html',
+        'tennisTracer/createTemaAula.html',
+        context,
+    )
+
+def createAluno(request):
+    if request.method == 'POST':
+
+        title = 'Cadastrar Novo Aluno'
+
+        context = {
+            'title': title,
+            'form': CreateAluno(request.POST)
+        }
+
+        return render(
+            request, 
+            'tennisTracer/createAluno.html',
+            context,
+        )
+
+    title = 'Cadastrar Novo Aluno'
+
+    context = {
+        'title': title,
+        'form': CreateAluno
+    }
+
+    return render(
+        request, 
+        'tennisTracer/createAluno.html',
         context,
     )

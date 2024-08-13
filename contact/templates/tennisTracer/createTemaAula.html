@@ -1,10 +1,8 @@
 {% extends "global/base.html" %}
 {% block content %}
 
-<h2 class="title"> Novo tema de Aula </h2>
-
     <form 
-    action=" {% url "tennisTracer:create" %} " 
+    action=" {% url "tennisTracer:createTemas" %} " 
     method="POST"
     enctype="multipart/form-data" 
     >
@@ -17,8 +15,13 @@
                     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                     {{ field }}
                     {{ field.errors}}
-
+                    {% if field.help_text %}
+                        <p class="help-text"> 
+                            {{field.help_text}}
+                        </p>
+                    {% endif %}
                 </div>
+
             {% endfor %}
         </div>
         
