@@ -2,18 +2,28 @@
 
 {% block content %}
 
-<h1 class="title">Olá Coach!</h1>
-<h4 class="subtitle">Ações:</h4>
+<div class="text-coach">
+    <h1 class="title-coach">Olá Coach!</h1>
+    <h2 class="subtitle-coach">Ações:</h2> 
+</div>
 
-<ul class="menu-list">
-    <li class="menu-item">
-        <a href= " {% url 'tennisTracer:createTemas' %} " class="menu-link">
-            <i class="fas fa-user-cog"></i> Alunos
+<ul class="menu-list-Coach">
+    <li class="menu-Coach">
+        <a href= " {% url 'tennisTracer:createAluno' %} " class="menu-link-coach">
+            <i class="fas fa-user-plus"></i>
+            <span>Novo Aluno</span>
         </a>
     </li>
-    <li class="menu-item">
-        <a href= " {% url 'tennisTracer:index' %} " class="menu-link">
-            <i class="fas fa-calendar-check"></i> Aulas
+    <li class="menu-Coach">
+        <a href= " {% url 'tennisTracer:index' %} " class="menu-link-coach">
+            <i class="fas fa-plus-square"></i> 
+            <span>Aulas</span>
+        </a>
+    </li>
+    <li class="menu-Coach">
+        <a href= " {% url 'tennisTracer:createTemas' %} " class="menu-link-coach">
+            <i class="fas fa-calendar-check"></i> 
+            <span>Aulas</span>
         </a>
     </li>
 </ul>

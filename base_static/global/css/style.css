@@ -28,15 +28,15 @@ body {
 
 /* Nav-Bar */
 .menu {
-    position: fixed; /* Fixa a navbar na tela */
-    bottom: 0; /* Posiciona a navbar na parte inferior da página */
-    width: 100%; /* Garante que a navbar ocupe toda a largura da tela */
+    position: fixed;
+    bottom: 0; 
+    width: 100%; 
     height: 60px;
     background-color: var(--dark-Green);
-    z-index: 1000; /* Garante que a navbar fique acima de outros elementos */
+    z-index: 1000; 
     border-top: var(--black-color);
     border: 3px;
-    
+    border-radius: 50% 50% 0 0;
 }
 
 .menu-list {
@@ -67,21 +67,78 @@ nav ul li a i {
     font-size: 15px;
     transition: color 0.3s; /* Transição suave para a cor do ícone */
 }
-/* 
-li:hover{
-    background-color: var(--black-color);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
+
+.text-coach {
+    color: var(--dark-Green);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0; /* Remove qualquer espaçamento entre itens */
+}
+
+.title-coach {
+    font-family: var(--font_title);
+    margin-bottom: 0.2em;
+}
+
+.subtitle-coach {
+    font-family: var(--font_subtitle);
+    font-size: smaller;
+    margin: 0; 
+    padding: 0; 
+}
+
+
+.menu-list-Coach {
+    display: flex;
+    flex-wrap: wrap; /* Permite a quebra de linha */
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-Coach {
+    flex: 0 0 33%; /* Cada item ocupa aproximadamente 30% da largura, permitindo 3 por linha */
+    max-width: 20%; /* Limita a largura máxima para garantir 3 por linha */
+    margin: 10px;
+    box-sizing: border-box; /* Inclui padding e border na largura total */
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--dark-Green);
+    height: 70px; /* Altura fixa */
 }
 
-li a:hover{
-    color: var(--dark-Green);
-} */
+.menu-link-coach {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--black-color);
+    background-color: var(--dark-Green);
+    width: 100%;  /* Preenche a largura do elemento pai */
+    height: 100%; /* Preenche a altura do elemento pai */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+}
+
+.menu-link-coach:hover {
+    transform: scale(1.05);
+}
+
+.menu-link-coach i {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.menu-link-coach span {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
 
 .container {
     width: 100%;
