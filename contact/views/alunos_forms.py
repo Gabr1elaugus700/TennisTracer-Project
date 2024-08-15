@@ -8,12 +8,17 @@ def createTemaAula(request):
     if request.method == 'POST':
 
         title = 'Cadastrar Nova Aula'
+        form = CreateTemaAula(request.POST)
 
         context = {
             'title': title,
-            'form': CreateTemaAula(request.POST)
+            'form': form
         }
 
+        if form.is_valid():
+            form.save()
+            return redirect('tennisTracer:createTemas')
+        
         return render(
             request, 
             'tennisTracer/createTemaAula.html',
@@ -37,11 +42,32 @@ def createAluno(request):
     if request.method == 'POST':
 
         title = 'Cadastrar Novo Aluno'
-
+        form = CreateAluno(request.POST)
+        
         context = {
             'title': title,
-            'form': CreateAluno(request.POST)
+            'form': form
         }
+
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            old = form.cleaned_data['old']
+            birthday = form.cleaned_data['birthday']
+            login = form.cleaned_data['login']
+            owner = form.cleaned_data['owner']  # Já é uma instância de User
+
+            # Crie ou atualize o objeto Aluno
+            aluno = Aluno.objects.create(
+                first_name=first_name,
+                last_name=last_name,
+                old=old,
+                birthday=birthday,
+                login=login,
+                owner=owner
+            )
+            form.save()
+            return redirect('tennisTracer:createAluno')
 
         return render(
             request, 
@@ -50,10 +76,11 @@ def createAluno(request):
         )
 
     title = 'Cadastrar Novo Aluno'
+    form = CreateAluno()
 
     context = {
         'title': title,
-        'form': CreateAluno
+        'form': form
     }
 
     return render(

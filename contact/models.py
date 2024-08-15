@@ -16,7 +16,7 @@ class Aluno(models.Model):
     old = models.IntegerField()  # Usar IntegerField para idade
     phone = models.CharField(max_length=50)
     login = models.CharField(max_length=50)
-    birthday = models.DateField()
+    birthday = models.DateField(blank=True, null=True)
     created_in = models.DateTimeField(default=timezone.now)
     obs = models.TextField(blank=True)
     show = models.BooleanField(default=True)
