@@ -8,6 +8,7 @@ def index(request):
 
     # Obter as aulas do coach específico
     aulas = Aula.objects.filter(coach=1)
+    alunos = alunos = Aluno.objects.all()
 
     # Paginar as aulas
     paginator = Paginator(aulas, 9)
@@ -18,6 +19,7 @@ def index(request):
     context = {
         'title': title,
         'page_obj': page_obj,
+        'alunos': alunos
     }
 
     return render(

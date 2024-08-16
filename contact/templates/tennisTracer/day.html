@@ -2,52 +2,7 @@
 
 {% block content %}
 
-<script>
-    var modal = document.getElementById("modalAdicionarAluno");
-
-// Pega o <span> que fecha o modal
-var span = document.getElementsByClassName("close")[0];
-
-// Abre o modal ao clicar no botão
-function openModal(aulaId) {
-    document.getElementById("aula-info").textContent = aulaId;
-    modal.style.display = "block";
-
-    // Atualiza a ação do formulário para a aula correta
-    document.getElementById("AddAluno").action = `/aula/${aulaId}/adicionar-aluno/`;
-}
-
-// Fecha o modal ao clicar no <span> (x)
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
-// Fecha o modal ao clicar fora dele
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-</script>
-
-
 <main class="content">
-
-                    <!-- Modal -->
-    <div id="modalAdicionarAluno" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Adicionar Aluno à Aula: <span id="aula-info"></span></h2>
-            <form id="AddAluno" method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Adicionar</button>
-            </form>
-        </div>
-    </div>
-
-
-
 
     <div class="day">
         <div class="pagination-left">
@@ -87,12 +42,62 @@ window.onclick = function(event) {
                 {% endfor %}
             </div>
             <div class="button">
-                <button class="button-Card" onclick="openModal('{{ day.id }}')">Adicionar Aluno</button>
+                
+                <button class="button-Card" onclick="openModal({{ day.id }}, '{{ day.hora_ini }}', '{{ day.day }}')">Adicionar Aluno</button>  
+                {% comment %} <button class="button-Card" onclick="redirect(115)">Adicionar Aluno</button> {% endcomment %}
                 <button class="button-Card"> Finalizar Aula </button>
             </div>
         </div>
     </div>
+    
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <input type="hidden" id="aulaId" value="">
+            <h2 id="modalTitle" class="title">Adicionar Aluno à Aula</h2>
+            <h5 class="subtitle"> Escolha o Aluno </h5>
+            
+                 {% for aluno in alunos %}
+                    <div class="alunos-modal">
+                        <a href="#"  class="aluno-modal-one" onclick="addAlunoToAula({{ aluno.id }})">
+                            <div class="aluno-Foto-Modal">
+                                <img src="{{ aluno.picture.url}}" alt="{{ person.aluno.nome }}"/>
+                                <div class="aluno-Nome-Modal">{{aluno.foto }}</div> 
+                            </div>
+                            <div class="aluno-modal-one-name">
+
+                                {{ aluno.first_name }} <br> {{ aluno.last_name }}
+                            </div>  
+                        </a> 
+                    </div>
+                {% endfor %}
+        </div>
+    </div>
+    
     {% endfor %}
 </main>
+
+<script>
+
+    function openModal(id, hora_ini, day) {
+        document.getElementById("myModal").style.display = "block";
+
+    document.getElementById("modalTitle").innerText = "Adicionar Aluno à Aula " + day + " às " + hora_ini ;
+        document.getElementById("aulaId").value = id;
+    }
+    
+    // Função para fechar o modal
+    function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+    }
+
+{% comment %}     
+    function redirect(id) {
+        const url = `/tennisTracer/addAluno/${id}/`;
+        window.location.href = url;
+    } {% endcomment %}
+
+</script>
+
 
 {% endblock content %}

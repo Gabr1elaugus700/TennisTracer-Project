@@ -14,13 +14,13 @@ class Aluno(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     old = models.IntegerField()  # Usar IntegerField para idade
-    phone = models.CharField(max_length=50)
+    phone = models.CharField(blank=True, null=True, max_length=50)
     login = models.CharField(max_length=50)
     birthday = models.DateField(blank=True, null=True)
     created_in = models.DateTimeField(default=timezone.now)
     obs = models.TextField(blank=True)
     show = models.BooleanField(default=True)
-    picture = models.ImageField(blank=True, upload_to='pictures/')
+    picture = models.ImageField(blank=True, null=True, upload_to='pictures/')
     category = models.CharField(max_length=50, blank=True)
     owner = models.ForeignKey(
         User, 

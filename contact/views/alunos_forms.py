@@ -89,19 +89,35 @@ def createAluno(request):
         context,
     )
 
-def addAluno(request, aula_id):
-    aula = get_object_or_404(Aula, id=aula_id)
+def addAluno(request, id):
+    aula = get_object_or_404(Aula, id=id)
+    alunos = Aluno.objects.all()
 
     if request.method == 'POST':
         form = AddAluno(request.POST)
+
+        context = {
+        'aula': aula,
+        'alunos': alunos,
+        'id': id
+    }
+    
         if form.is_valid():
            aluno = form.cleaned_data['aluno']
            Aluno_Aula.objects.create(aula=aula, aluno=aluno)
-           return redirect('tennisTracer:index', aula_id=aula_id)
-    else:
-        form = AddAluno()
+           return redirect('tennisTracer:index', id=id)
+    
+    form = AddAluno()
+    print(id)
 
     context = {
         'form': form,
-        'aula': aula
+        'aula': aula,
+        'alunos': alunos,
+        'id': id
     }
+    return render(
+        request,
+        'tennisTracer/teste.html', 
+        context
+        )
