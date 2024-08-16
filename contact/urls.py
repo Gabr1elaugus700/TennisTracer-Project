@@ -12,6 +12,7 @@ urlpatterns = [
     # Create: Criar 
     path('tennisTracer/createTemas/', views.createTemaAula, name='createTemas'),
     path('tennisTracer/createAluno/', views.createAluno, name='createAluno'),
+    path('tennisTracer/<int:aula_id>/addAluno/', views.addAluno, name='addAluno'),
     # Detail: Get
     path('tennisTracer/profileCoach/', views.profileCoach, name='profileCoach'),
 

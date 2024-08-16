@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from . import models
 from django.contrib.auth.models import User
+from .models import Aluno
 
 class CreateTemaAula(forms.ModelForm):
     
@@ -27,35 +28,6 @@ class CreateTemaAula(forms.ModelForm):
                 
             )
         }
-
-
-    # def clean(self): #Validando campo que depende de outro campo e é chamado antes de Salvar no BD
-    #     cleaned_data = self.cleaned_data
-        
-    #     self.add_error(
-    #         'tema_name',
-    #         ValidationError(
-    #             'Descreva o Tema, Por Favor!', 
-    #             code='invalid'
-    #         )
-    #     )
-    #     return super().clean()
-    
-
-    ## Esse é o Clean do Campo, ele executa primeiro que o de cima!
-    
-    # def clean_tema_name(self):
-    #     tema_name = self.cleaned_data.get('tema_name')
-        
-    #     if tema_name:
-    #         self.add_error(
-    #             'tema_name',
-    #             ValidationError(
-    #                 'Erro Aqui. Não digite ABC',
-    #                 code='invalid'
-    #             )
-    #         )
-    #     return tema_name
 
 class CreateAluno(forms.ModelForm):
 
@@ -138,3 +110,13 @@ class CreateAluno(forms.ModelForm):
         model = models.Aluno  # Associa o formulário ao modelo Aluno
         fields = ('first_name', 'last_name', 'old' , 'login', 'owner')
     
+class AddAluno(forms.Form):
+    aluno = forms.ModelChoiceField(
+        queryset= Aluno.objects.all(),
+        widget= forms.Select(
+            attrs={
+                'class': 'form-control'
+            }
+        ),
+        label='Selecione o Aluno'
+    )

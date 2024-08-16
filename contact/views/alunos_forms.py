@@ -1,7 +1,7 @@
 from contact.models import *
 from django.shortcuts import get_object_or_404, render, redirect
 from django.core.paginator import Paginator
-from contact.forms import CreateTemaAula, CreateAluno
+from contact.forms import CreateTemaAula, CreateAluno, AddAluno
 
 
 def createTemaAula(request):
@@ -88,3 +88,20 @@ def createAluno(request):
         'tennisTracer/createAluno.html',
         context,
     )
+
+def addAluno(request, aula_id):
+    aula = get_object_or_404(Aula, id=aula_id)
+
+    if request.method == 'POST':
+        form = AddAluno(request.POST)
+        if form.is_valid():
+           aluno = form.cleaned_data['aluno']
+           Aluno_Aula.objects.create(aula=aula, aluno=aluno)
+           return redirect('tennisTracer:index', aula_id=aula_id)
+    else:
+        form = AddAluno()
+
+    context = {
+        'form': form,
+        'aula': aula
+    }

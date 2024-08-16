@@ -2,7 +2,53 @@
 
 {% block content %}
 
+<script>
+    var modal = document.getElementById("modalAdicionarAluno");
+
+// Pega o <span> que fecha o modal
+var span = document.getElementsByClassName("close")[0];
+
+// Abre o modal ao clicar no botão
+function openModal(aulaId) {
+    document.getElementById("aula-info").textContent = aulaId;
+    modal.style.display = "block";
+
+    // Atualiza a ação do formulário para a aula correta
+    document.getElementById("AddAluno").action = `/aula/${aulaId}/adicionar-aluno/`;
+}
+
+// Fecha o modal ao clicar no <span> (x)
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// Fecha o modal ao clicar fora dele
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+
+
 <main class="content">
+
+                    <!-- Modal -->
+    <div id="modalAdicionarAluno" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Adicionar Aluno à Aula: <span id="aula-info"></span></h2>
+            <form id="AddAluno" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Adicionar</button>
+            </form>
+        </div>
+    </div>
+
+
+
+
     <div class="day">
         <div class="pagination-left">
             {% if page_obj.has_previous %}
@@ -41,6 +87,7 @@
                 {% endfor %}
             </div>
             <div class="button">
+                <button class="button-Card" onclick="openModal('{{ day.id }}')">Adicionar Aluno</button>
                 <button class="button-Card"> Finalizar Aula </button>
             </div>
         </div>
