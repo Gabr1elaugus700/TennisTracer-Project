@@ -50,22 +50,7 @@ def createAluno(request):
         }
 
         if form.is_valid():
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            old = form.cleaned_data['old']
-            birthday = form.cleaned_data['birthday']
-            login = form.cleaned_data['login']
-            owner = form.cleaned_data['owner']  # Já é uma instância de User
-
-            # Crie ou atualize o objeto Aluno
-            aluno = Aluno.objects.create(
-                first_name=first_name,
-                last_name=last_name,
-                old=old,
-                birthday=birthday,
-                login=login,
-                owner=owner
-            )
+            
             form.save()
             return redirect('tennisTracer:createAluno')
 
