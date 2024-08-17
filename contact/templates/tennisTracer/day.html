@@ -61,7 +61,11 @@
                     <div class="alunos-modal">
                         <a href="#"  class="aluno-modal-one" onclick="addAlunoToAula({{ aluno.id }})">
                             <div class="aluno-Foto-Modal">
-                                <img src="{{ aluno.picture.url}}" alt="{{ person.aluno.nome }}"/>
+                                if{% if aluno.picture %}
+                                <img src="{{ aluno.picture.url }}" alt="{{ aluno.first_name }} {{ aluno.last_name }}">
+                            {% else %}
+                                <img src=" defaults/default.png" alt="Foto padrão">
+                            {% endif %}
                                 <div class="aluno-Nome-Modal">{{aluno.foto }}</div> 
                             </div>
                             <div class="aluno-modal-one-name">
