@@ -44,12 +44,13 @@
             <div class="button">
               <button class="button-Card" onclick="openModal({{ day.id }}, '{{ day.hora_ini }}', '{{ day.day }}')">Adicionar Aluno</button>
              
-              <button class="button-Card">Finalizar Aula</button>
+              <button class="button-Card" onclick="FechaAula()">Finalizar Aula</button>
             </div>
           </div>
         </div>
       {% endfor %}
     </div>
+    {% comment %} MODAL DE ADD ALUNO {% endcomment %}
     <div id="myModal" class="modal">
       <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
@@ -77,21 +78,40 @@
         </div>
       </div>
     </div>
+
+    {% comment %} MODAL DE FINALIZAR A AULA {% endcomment %}
+    <div id="FechaAula" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="FechaAula()"></span>
+          <input type="hidden" id="FechaAulaIn" value="" />
+          {% comment %} <h2 id="modalTitle" class="title">Adicionar Aluno à Aula</h2>
+          <h5 class="subtitle">Escolha o Aluno</h5> {% endcomment %}
+  
+          <div class="alunos-modal">
+            <h1>Teste Modal</h1>
+          </div>
+        </div>
+      </div>
   </main>
 
   <script>
+    
     function openModal(id, hora_ini, day) {
       document.getElementById('myModal').style.display = 'block'
     
       document.getElementById('modalTitle').innerText = 'Adicionar Aluno à Aula ' + day + ' às ' + hora_ini
       document.getElementById('aulaId').value = id
     }
-    
-    // Função para fechar o modal
     function closeModal() {
       document.getElementById('myModal').style.display = 'none'
     }
     
+    function FechaAula() {
+        document.getElementById('FechaAula').style.display = 'block'
+      
+        
+      }
+      
     function vincularAluno(alunoId) {
       var aulaId = document.getElementById('aulaId').value
     
