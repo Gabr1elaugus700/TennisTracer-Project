@@ -2,7 +2,8 @@ from contact.models import *
 from django.shortcuts import get_object_or_404, render, redirect
 from django.core.paginator import Paginator
 from contact.forms import CreateTemaAula, CreateAluno, AddAluno
-
+from django.http import JsonResponse
+import json
 
 
 def createTemaAula(request):
@@ -107,3 +108,24 @@ def addAluno(request, id):
         'tennisTracer/teste.html', 
         context
         )
+
+def vinAluno(request):
+    if request.method == 'POST':
+        print('To aqui')
+        data = json.loads(request.body)
+        aula_id = data.get('aula_id')
+        aluno_id = data.get('aluno_id')
+
+        aula = get_object_or_404(Aula, id=aula_id)
+        aluno = get_object_or_404(Aluno, id=aluno_id)
+
+        # Verifica se a relação já existe para evitar duplicatas
+        vinculo_existente = Aluno_Aula.objects.filter(aula=aula, aluno=aluno).exists()
+
+        if not vinculo_existente: 
+            Aluno_Aula.objects.create(aula=aula, aluno=aluno)
+            return JsonResponse({'status': 'success'}, status=200)
+        else:
+            return JsonResponse({'status': 'duplicate'}, status=400)
+    
+    return JsonResponse({'status': 'invalid method'}, status=405)
