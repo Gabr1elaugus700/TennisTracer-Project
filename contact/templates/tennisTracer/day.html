@@ -21,64 +21,62 @@
         {% endif %}
       </div>
     </div>
-
-    {% for day in page_obj %}
-      <div class="aula-Hora">
-        <div class="card">
-          <h1 class="title">{{ day.hora_ini }}</h1>
-          <div class="aluno-Card">
-            {% for person in day.aluno_aula_set.all %}
-              <div class="aluno-Foto">
-                {% if person.aluno.picture %}
-                  <img src="{{ person.aluno.picture.url }}" alt="{{ aluno.first_name }} {{ aluno.last_name }}" onerror="this.onerror=null; this.src='{{ MEDIA_URL }}pictures/defaults/default.png';" />
-                {% else %}
-                  <!-- Adicione isso para ver o que está sendo renderizado -->
-                  <img src="{{ MEDIA_URL }}pictures/defaults/default.png" alt="AAAA" />
-                {% endif %}
-                <div class="aluno-Nome">{{ person.aluno.last_name }}</div>
-              </div>
-            {% empty %}
-              <p>Nenhum aluno inscrito nesta aula.</p>
-            {% endfor %}
-          </div>
-          <div class="button">
-            <button class="button-Card" onclick="openModal({{ day.id }}, '{{ day.hora_ini }}', '{{ day.day }}')">Adicionar Aluno</button>
-            {% comment %}
-            <button class="button-Card" onclick="redirect(115)">Adicionar Aluno</button>
-            {% endcomment %}
-            <button class="button-Card">Finalizar Aula</button>
-          </div>
-        </div>
-      </div>
-
-      <div id="myModal" class="modal">
-        <div class="modal-content">
-          <span class="close" onclick="closeModal()">&times;</span>
-          <input type="hidden" id="aulaId" value="" />
-          <h2 id="modalTitle" class="title">Adicionar Aluno à Aula</h2>
-          <h5 class="subtitle">Escolha o Aluno</h5>
-
-          {% for aluno in alunos %}
-            <div class="alunos-modal">
-              <a href="#" class="aluno-modal-one" onclick="vincularAluno({{ aluno.id }})">
-                <div class="aluno-Foto-Modal">
-                  {% if aluno.picture %}
-                    <img src="{{ aluno.picture.url }}" alt="{{ aluno.first_name }} {{ aluno.last_name }}" onerror="this.onerror=null; this.src='{{ MEDIA_URL }}pictures/defaults/default.png';" />
+    <div class="contentAula">
+      {% for day in page_obj %}
+        <div class="aula-Hora">
+          <div class="card">
+            <h1 class="title">{{ day.hora_ini }}</h1>
+            <div class="aluno-Card">
+              {% for person in day.aluno_aula_set.all %}
+                <div class="aluno-Foto">
+                  {% if person.aluno.picture %}
+                    <img src="{{ person.aluno.picture.url }}" alt="{{ aluno.first_name }} {{ aluno.last_name }}" onerror="this.onerror=null; this.src='{{ MEDIA_URL }}pictures/defaults/default.png';" />
                   {% else %}
                     <!-- Adicione isso para ver o que está sendo renderizado -->
                     <img src="{{ MEDIA_URL }}pictures/defaults/default.png" alt="AAAA" />
                   {% endif %}
+                  <div class="aluno-Nome">{{ person.aluno.last_name }}</div>
                 </div>
-                <div class="aluno-modal-one-name">
-                  {{ aluno.first_name }} <br />
-                  {{ aluno.last_name }}
-                </div>
-              </a>
+              {% empty %}
+                <p>Nenhum aluno inscrito nesta aula.</p>
+              {% endfor %}
             </div>
+            <div class="button">
+              <button class="button-Card" onclick="openModal({{ day.id }}, '{{ day.hora_ini }}', '{{ day.day }}')">Adicionar Aluno</button>
+             
+              <button class="button-Card">Finalizar Aula</button>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <input type="hidden" id="aulaId" value="" />
+        <h2 id="modalTitle" class="title">Adicionar Aluno à Aula</h2>
+        <h5 class="subtitle">Escolha o Aluno</h5>
+
+        <div class="alunos-modal">
+          {% for aluno in alunos %}
+            <a href="#" class="aluno-modal-one" onclick="vincularAluno({{ aluno.id }})">
+              <div class="aluno-Foto-Modal">
+                {% if aluno.picture %}
+                  <img src="{{ aluno.picture.url }}" alt="{{ aluno.first_name }} {{ aluno.last_name }}" onerror="this.onerror=null; this.src='{{ MEDIA_URL }}pictures/defaults/default.png';" />
+                {% else %}
+                  <!-- Adicione isso para ver o que está sendo renderizado -->
+                  <img src="{{ MEDIA_URL }}pictures/defaults/default.png" alt="AAAA" />
+                {% endif %}
+              </div>
+              <div class="aluno-modal-one-name">
+                {{ aluno.first_name }} <br />
+                {{ aluno.last_name }}
+              </div>
+            </a>
           {% endfor %}
         </div>
       </div>
-    {% endfor %}
+    </div>
   </main>
 
   <script>
