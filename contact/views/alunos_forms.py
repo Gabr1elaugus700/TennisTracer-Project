@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from contact.forms import CreateTemaAula, CreateAluno, AddAluno
 
 
+
 def createTemaAula(request):
     if request.method == 'POST':
 

@@ -20,7 +20,7 @@ class Aluno(models.Model):
     created_in = models.DateTimeField(default=timezone.now)
     obs = models.TextField(blank=True)
     show = models.BooleanField(default=True)
-    picture = models.ImageField(blank=True, null=True, upload_to='pictures/',  default='defaults/default.png' )
+    picture = models.ImageField(blank=True, null=True, upload_to='pictures/')
     category = models.CharField(max_length=50, blank=True)
     owner = models.ForeignKey(
         User, 

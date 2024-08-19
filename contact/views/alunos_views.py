@@ -1,7 +1,7 @@
 from contact.models import *
 from django.shortcuts import get_object_or_404, render, redirect
 from django.core.paginator import Paginator
-
+from django.conf import settings
 
 def index(request):
     title = 'Aulas'
@@ -19,7 +19,8 @@ def index(request):
     context = {
         'title': title,
         'page_obj': page_obj,
-        'alunos': alunos
+        'alunos': alunos,
+        'MEDIA_URL': settings.MEDIA_URL
     }
 
     return render(

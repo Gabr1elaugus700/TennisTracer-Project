@@ -1,101 +1,115 @@
-{% extends "global/base.html" %} 
-
-{% block content %}
+{% extends "global/base.html" %} {% load static %} {% block content %}
 
 <main class="content">
-
-    <div class="day">
-        <div class="pagination-left">
-            {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}">&#9664;</a>
-            {% else %}
-                <span class="disabled">&#9664;</span>
-            {% endif %}
-        </div>
-        <div class="nameDay">
-            {% if page_obj %}
-                <h1>{{ page_obj.object_list.0.day }}</h1>
-            {% endif %}
-        </div>
-        <div class="pagination-right">
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">&#9654;</a>
-            {% else %}
-                <span class="disabled">&#9654;</span>
-            {% endif %}
-        </div>
+  <div class="day">
+    <div class="pagination-left">
+      {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}">&#9664;</a>
+      {% else %}
+      <span class="disabled">&#9664;</span>
+      {% endif %}
     </div>
-
-    {% for day in page_obj %}
-    <div class="aula-Hora">
-        <div class="card">
-            <h1 class="title"> {{ day.hora_ini }} </h1>
-            <div class="aluno-Card">
-                {% for person in day.aluno_aula_set.all %}
-                
-                <div class="aluno-Foto">
-                    <img src="{{ person.aluno.picture.url }}" alt="{{ person.aluno.nome }}"/>
-                    <div class="aluno-Nome">{{ person.aluno.last_name }}</div> 
-                </div>
-                {% empty %}
-                <p>Nenhum aluno inscrito nesta aula.</p>
-                {% endfor %}
-            </div>
-            <div class="button">
-                
-                <button class="button-Card" onclick="openModal({{ day.id }}, '{{ day.hora_ini }}', '{{ day.day }}')">Adicionar Aluno</button>  
-                {% comment %} <button class="button-Card" onclick="redirect(115)">Adicionar Aluno</button> {% endcomment %}
-                <button class="button-Card"> Finalizar Aula </button>
-            </div>
-        </div>
+    <div class="nameDay">
+      {% if page_obj %}
+      <h1>{{ page_obj.object_list.0.day }}</h1>
+      {% endif %}
     </div>
-    
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <input type="hidden" id="aulaId" value="">
-            <h2 id="modalTitle" class="title">Adicionar Aluno à Aula</h2>
-            <h5 class="subtitle"> Escolha o Aluno </h5>
-            
-                 {% for aluno in alunos %}
-                    <div class="alunos-modal">
-                        <a href="#"  class="aluno-modal-one" onclick="addAlunoToAula({{ aluno.id }})">
-                            <div class="aluno-Foto-Modal">
-                                if{% if aluno.picture %}
-                                <img src="{{ aluno.picture.url }}" alt="{{ aluno.first_name }} {{ aluno.last_name }}">
-                            {% else %}
-                                <img src=" defaults/default.png" alt="Foto padrão">
-                            {% endif %}
-                                <div class="aluno-Nome-Modal">{{aluno.foto }}</div> 
-                            </div>
-                            <div class="aluno-modal-one-name">
-
-                                {{ aluno.first_name }} <br> {{ aluno.last_name }}
-                            </div>  
-                        </a> 
-                    </div>
-                {% endfor %}
-        </div>
+    <div class="pagination-right">
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">&#9654;</a>
+      {% else %}
+      <span class="disabled">&#9654;</span>
+      {% endif %}
     </div>
-    
-    {% endfor %}
+  </div>
+
+  {% for day in page_obj %}
+  <div class="aula-Hora">
+    <div class="card">
+      <h1 class="title">{{ day.hora_ini }}</h1>
+      <div class="aluno-Card">
+        {% for person in day.aluno_aula_set.all %}
+
+        <div class="aluno-Foto">
+          <img
+            src="{{ person.aluno.picture.url }}"
+            alt="{{ person.aluno.nome }}" onerror="this.onerror=null; this.src='{{ MEDIA_URL }}pictures/defaults/default.png';"
+          />
+          <div class="aluno-Nome">{{ person.aluno.last_name }}</div>
+        </div>
+        {% empty %}
+        <p>Nenhum aluno inscrito nesta aula.</p>
+        {% endfor %}
+      </div>
+      <div class="button">
+        <button
+          class="button-Card"
+          onclick="openModal({{ day.id }}, '{{ day.hora_ini }}', '{{ day.day }}')"
+        >
+          Adicionar Aluno
+        </button>
+        {% comment %}
+        <button class="button-Card" onclick="redirect(115)">
+          Adicionar Aluno
+        </button>
+        {% endcomment %}
+        <button class="button-Card">Finalizar Aula</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <input type="hidden" id="aulaId" value="" />
+      <h2 id="modalTitle" class="title">Adicionar Aluno à Aula</h2>
+      <h5 class="subtitle">Escolha o Aluno</h5>
+
+      {% for aluno in alunos %}
+      <div class="alunos-modal">
+        <a
+          href="#"
+          class="aluno-modal-one"
+          onclick="addAlunoToAula({{ aluno.id }})"
+        >
+          <div class="aluno-Foto-Modal">
+            {% if aluno.picture %}
+            <img
+              src="{{ aluno.picture.url }}"
+              alt="{{ aluno.first_name }} {{ aluno.last_name }}" onerror="this.onerror=null; this.src='{{ MEDIA_URL }}pictures/defaults/default.png';"
+            />
+            {% else %} 
+            <!-- Adicione isso para ver o que está sendo renderizado -->
+            <img src="{{ MEDIA_URL }}pictures/defaults/default.png" alt="AAAA">
+
+            {% endif %}
+          </div>
+          <div class="aluno-modal-one-name">
+            {{ aluno.first_name }} <br />
+            {{ aluno.last_name }}
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% endfor %}
 </main>
 
 <script>
+  function openModal(id, hora_ini, day) {
+    document.getElementById("myModal").style.display = "block";
 
-    function openModal(id, hora_ini, day) {
-        document.getElementById("myModal").style.display = "block";
+    document.getElementById("modalTitle").innerText =
+      "Adicionar Aluno à Aula " + day + " às " + hora_ini;
+    document.getElementById("aulaId").value = id;
+  }
 
-    document.getElementById("modalTitle").innerText = "Adicionar Aluno à Aula " + day + " às " + hora_ini ;
-        document.getElementById("aulaId").value = id;
-    }
-    
-    // Função para fechar o modal
-    function closeModal() {
-        document.getElementById("myModal").style.display = "none";
-    }
-
+  // Função para fechar o modal
+  function closeModal() {
+    document.getElementById("myModal").style.display = "none";
+  }
 </script>
-
 
 {% endblock content %}
