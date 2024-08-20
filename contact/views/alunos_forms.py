@@ -1,6 +1,5 @@
 from contact.models import *
 from django.shortcuts import get_object_or_404, render, redirect
-from django.core.paginator import Paginator
 from contact.forms import CreateTemaAula, CreateAluno, AddAluno
 from django.http import JsonResponse
 import json
@@ -111,7 +110,6 @@ def addAluno(request, id):
 
 def vinAluno(request):
     if request.method == 'POST':
-        print('To aqui')
         data = json.loads(request.body)
         aula_id = data.get('aula_id')
         aluno_id = data.get('aluno_id')
@@ -129,3 +127,60 @@ def vinAluno(request):
             return JsonResponse({'status': 'duplicate'}, status=400)
     
     return JsonResponse({'status': 'invalid method'}, status=405)
+
+
+def detalhes_aula(request, aula_id):
+    # Buscar a aula específica
+    aula = get_object_or_404(Aula, id=aula_id)
+    
+    # Buscar os alunos vinculados a essa aula
+    alunos_aula = Aluno_Aula.objects.filter(aula=aula)
+    
+    context = {
+        'aula': aula,
+        'alunos_aula': alunos_aula,
+    }
+    
+    return render(request, 'day.html', context)
+
+def alunos_por_aula(request, aula_id):
+    aula = get_object_or_404(Aula, id=aula_id)
+    alunos_aula = Aluno_Aula.objects.filter(aula=aula)
+
+
+    alunos = []
+    for aluno_aula in alunos_aula:
+        aluno = aluno_aula.aluno
+        alunos.append({
+            'id': aluno.id,
+            'first_name': aluno.first_name,
+            'last_name': aluno.last_name,
+            'picture': aluno.picture.url if aluno.picture else None
+        })
+
+    return JsonResponse({'alunos': alunos})
+
+def registrar_presenca(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        aula_id = data.get('aula_id')
+        alunos_ids = data.get('alunos', [])
+
+        try:
+            # Verificar se a aula existe
+            aula = Aula.objects.get(id=aula_id)
+            
+            # Para cada aluno selecionado, atualizar a presença
+            for aluno_id in alunos_ids:
+                aluno_aula = Aluno_Aula.objects.get(aula=aula, aluno_id=aluno_id)
+                aluno_aula.presente = True  # Supondo que você tenha um campo 'presente' no model
+                aluno_aula.save()
+
+            return JsonResponse({'status': 'success'})
+
+        except Aula.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Aula não encontrada.'}, status=400)
+        except Aluno_Aula.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Aluno não encontrado.'}, status=400)
+
+    return JsonResponse({'status': 'error', 'message': 'Método inválido.'}, status=400)

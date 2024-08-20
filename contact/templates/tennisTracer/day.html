@@ -43,14 +43,14 @@
             </div>
             <div class="button">
               <button class="button-Card" onclick="openModal({{ day.id }}, '{{ day.hora_ini }}', '{{ day.day }}')">Adicionar Aluno</button>
-             
-              <button class="button-Card" onclick="FechaAula()">Finalizar Aula</button>
+
+              <button class="button-Card" onclick="openModalEndAula({{ day.id }}, '{{ day.hora_ini }}', '{{ day.day }}')">Finalizar Aula</button>
             </div>
           </div>
         </div>
       {% endfor %}
     </div>
-    {% comment %} MODAL DE ADD ALUNO {% endcomment %}
+    {% comment %}MODAL DE ADD ALUNO{% endcomment %}
     <div id="myModal" class="modal">
       <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
@@ -79,72 +79,149 @@
       </div>
     </div>
 
-    {% comment %} MODAL DE FINALIZAR A AULA {% endcomment %}
-    <div id="FechaAula" class="modal">
-        <div class="modal-content">
-          <span class="close" onclick="FechaAula()"></span>
-          <input type="hidden" id="FechaAulaIn" value="" />
-          {% comment %} <h2 id="modalTitle" class="title">Adicionar Aluno à Aula</h2>
-          <h5 class="subtitle">Escolha o Aluno</h5> {% endcomment %}
-  
-          <div class="alunos-modal">
-            <h1>Teste Modal</h1>
+    {% comment %}MODAL DE FINALIZAR A AULA{% endcomment %}
+    <div id="FechaAula" class="modal" style="display: none;">
+        <div class="modal-content-FinAula">
+          <span class="close" onclick="closeModalEndAula()">&times;</span>
+          <input type="hidden" id="aulaId" value="" />
+      
+          <h2 id="modalTitleEnd" class="title">teste</h2>
+          
+          <div id="alunosList" class="aluno-Card">
+            <!-- Este conteúdo será preenchido dinamicamente via JS -->
+          </div>
+          <div class="buttonEnd">
+            <button class="button-Modal-End" onclick="FinalizaAula()">Finalizar Aula</button>
           </div>
         </div>
       </div>
   </main>
 
   <script>
+    function closeModalEndAula() {
+        document.getElementById('FechaAula').style.display = 'none'
+      }
     
-    function openModal(id, hora_ini, day) {
-      document.getElementById('myModal').style.display = 'block'
-    
-      document.getElementById('modalTitle').innerText = 'Adicionar Aluno à Aula ' + day + ' às ' + hora_ini
-      document.getElementById('aulaId').value = id
-    }
-    function closeModal() {
-      document.getElementById('myModal').style.display = 'none'
-    }
-    
-    function FechaAula() {
-        document.getElementById('FechaAula').style.display = 'block'
+    function openModalEndAula(aulaId, hora_ini, day) {
+        // Exibir o modal
+        document.getElementById('FechaAula').style.display = 'block';
+        document.getElementById('modalTitleEnd').innerText = `Finalizar Aula de ${day}, às ${hora_ini}`;
+        // Limpar a lista de alunos atual
+        var alunosList = document.getElementById('alunosList');
+        alunosList.innerHTML = '';
       
+        // Configurar o ID da aula no campo oculto
+        document.getElementById('aulaId').value = aulaId;
+      
+        // Fazer uma requisição AJAX para buscar os alunos dessa aula
+        fetch(`/tennisTracer/aula/${aulaId}/alunos/`)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.alunos.length > 0) {
+              // Populando o modal com os alunos
+              data.alunos.forEach((aluno) => {
+                var alunoDiv = `
+                  <div class="aluno-Foto">
+                    <img src="${aluno.picture || '/media/pictures/defaults/default.png'}" alt="${aluno.first_name} ${aluno.last_name}" />
+                    <div class="aluno-Nome">${aluno.last_name}</div>
+                    <!-- Adicionando a checkbox para vincular o aluno -->
+                    <div class="aluno-checkbox">
+                      <label>
+                        <input type="checkbox" class="aluno-checkbox" name="alunos_vinculados" value='${aluno.id}'>
+                      </label>
+                    </div>
+                  </div>
+                `;
+                alunosList.innerHTML += alunoDiv;
+              });
+            } else {
+              alunosList.innerHTML = '<p>Nenhum aluno inscrito nesta aula.</p>';
+            }
+          })
+          .catch((error) => console.error('Erro ao buscar os alunos:', error));
+      }
+      
+      function FinalizaAula() {
+        var aulaId = document.getElementById('aulaId').value;
         
-      }
+        // Coletar os alunos que foram marcados como presentes
+        var checkboxes = document.querySelectorAll('input[name="alunos_vinculados"]:checked');
+        var alunosSelecionados = [];
+        
+        
+        checkboxes.forEach((checkbox) => {
+          alunosSelecionados.push(checkbox.value);
+        });
       
-    function vincularAluno(alunoId) {
-      var aulaId = document.getElementById('aulaId').value
-    
-      // Configurar os dados para enviar
-      var data = {
-        aula_id: aulaId,
-        aluno_id: alunoId
-      }
-    
-      // Enviar a requisição POST
-      fetch('/tennisTracer/vinAluno/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': '{{ csrf_token }}' // Inclua o CSRF token
-        },
-        body: JSON.stringify(data)
-      })
+        // Enviar os dados dos alunos selecionados
+        var data = {
+          aula_id: aulaId,
+          alunos: alunosSelecionados
+        };
+      
+        fetch('/tennisTracer/aula/presente/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}' // Inclua o CSRF token
+          },
+          body: JSON.stringify(data)
+        })
         .then((response) => response.json())
         .then((data) => {
           if (data.status === 'success') {
-            // Exibir mensagem de sucesso
-            alert('Aluno vinculado com sucesso!')
-            // Fechar o modal e recarregar a página ou redirecionar
-            closeModal()
-            window.location.href = '/tennisTracer/'
-          } else if (data.status === 'duplicate') {
-            alert('Este aluno já está vinculado a esta aula.')
+            alert('Presença registrada com sucesso!');
+            closeModal();
           } else {
-            alert('Erro ao vincular aluno.')
+            alert('Erro ao salvar a presença.');
           }
         })
-        .catch((error) => console.error('Erro:', error))
-    }
+        .catch((error) => console.error('Erro ao salvar a presença:', error));
+      }
+
+      function openModal(id, hora_ini, day) {
+        document.getElementById('myModal').style.display = 'block'
+      
+        document.getElementById('modalTitle').innerText = 'Adicionar Aluno à Aula ' + day + ' às ' + hora_ini
+        document.getElementById('aulaId').value = id
+      }
+      function closeModal() {
+        document.getElementById('myModal').style.display = 'none'
+      }
+      
+      function vincularAluno(alunoId) {
+        var aulaId = document.getElementById('aulaId').value
+      
+        // Configurar os dados para enviar
+        var data = {
+          aula_id: aulaId,
+          aluno_id: alunoId
+        }
+      
+        // Enviar a requisição POST
+        fetch('/tennisTracer/vinAluno/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}' // Inclua o CSRF token
+          },
+          body: JSON.stringify(data)
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === 'success') {
+              // Exibir mensagem de sucesso
+              alert('Aluno vinculado com sucesso!')
+              // Fechar o modal e recarregar a página ou redirecionar
+              closeModal()
+              window.location.href = '/tennisTracer/'
+            } else if (data.status === 'duplicate') {
+              alert('Este aluno já está vinculado a esta aula.')
+            } else {
+              alert('Erro ao vincular aluno.')
+            }
+          })
+          .catch((error) => console.error('Erro:', error))
+      }
   </script>
 {% endblock %}

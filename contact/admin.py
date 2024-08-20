@@ -17,6 +17,16 @@ class AulaAdmin(admin.ModelAdmin):
     list_display = 'id', 'day', 'hora_ini', 'hora_fim', 'coach',
     ordering = '-id',
 
+@admin.register(models.OcorrenciaAula)
+class OcorrenciaAulaAdmin(admin.ModelAdmin):
+    list_display = 'id', 'aula', 'data',
+    ordering = 'id',
+
+@admin.register(models.Aluno_OcorrenciaAula)
+class Aluno_OcorrenciaAulaAdmin(admin.ModelAdmin):
+    list_display = 'id', 'aluno', 'ocorrenciaAula', 'presente',
+    ordering = 'id',
+
 @admin.register(models.Aluno_Aula)
 class Aluno_AulaAdmin(admin.ModelAdmin):
     list_display = 'id', 'aula', 'aluno',

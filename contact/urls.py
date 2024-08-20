@@ -15,7 +15,9 @@ urlpatterns = [
     path('tennisTracer/createAluno/', views.createAluno, name='createAluno'),
     path('tennisTracer/addAluno/<int:id>/', views.addAluno, name='addAluno'),
     path('tennisTracer/vinAluno/', views.vinAluno, name='vinAluno'),
-    
+    path('tennisTracer/aula/<int:aula_id>/alunos/', views.alunos_por_aula, name='alunos_por_aula'),
+    path('tennisTracer/aula/presente/', views.registrar_presenca, name='registrar_presenca'),
+
     # Detail: Get
     path('tennisTracer/profileCoach/', views.profileCoach, name='profileCoach'),
     # Update: Atualizar

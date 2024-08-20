@@ -217,6 +217,17 @@ nav ul li a i {
     max-width: 600px; 
 }
 
+.modal-content-FinAula {
+    background-color: var(--black-color);
+    color: var(--dark-Green);
+    border: 4px solid var(--dark-Green) ;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 600px; 
+    transition: background-color 0.3s;
+}
 .close {
     color: #aaa;
     float: right;
@@ -344,7 +355,8 @@ p{
     font-size: smaller;
 }
 
-.button-Card {
+.button-Modal {
+    background-color: red;
     width: 137px;
     height: 19px;
     flex-shrink: 0;
@@ -357,11 +369,32 @@ p{
     margin-top: 10px;
 }
 
-.button-Card:hover {
-    background-color: var(--black-color);
-    color: var(--dark-Green);
-    border: none;
+.buttonEnd{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    justify-content: center;
 }
+
+.button-Modal-End{
+    width: 180px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 50px;
+    font-family: var(--font_subtitle);
+    background: var(--button);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border: none;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.button-Modal-End:hover {
+background-color: var(--dark-Green);
+color: var(--background-color);
+}
+
 
 @media (max-width: 768px) {
     .aluno-Foto {
@@ -463,6 +496,7 @@ form {
     text-align: center;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-top: 10px;
 }
 
 .button-Card:hover {

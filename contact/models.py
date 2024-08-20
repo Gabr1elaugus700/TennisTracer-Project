@@ -49,6 +49,22 @@ class Aula(models.Model):
     def __str__(self) -> str:
         return f'{self.id} {self.day} {self.hora_ini} {self.coach} '
 
+class OcorrenciaAula(models.Model):
+    aula = models.ForeignKey(Aula, on_delete=models.CASCADE)
+    data = models.DateField()
+    alunos_presentes = models.ManyToManyField('Aluno', through='Aluno_OcorrenciaAula') 
+
+    def __str__(self) -> str:
+        return f'{self.aula} em {self.data}'
+
+class Aluno_OcorrenciaAula(models.Model):
+    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
+    ocorrenciaAula = models.ForeignKey(OcorrenciaAula, on_delete=models.CASCADE)
+    presente = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return f'{self.aluno} em {self.ocorrenciaAula}'
+
 class Aluno_Aula(models.Model):
     aula = models.ForeignKey(Aula, on_delete=models.SET_NULL, null=True)  
     aluno = models.ForeignKey(Aluno, on_delete=models.SET_NULL, null=True)
