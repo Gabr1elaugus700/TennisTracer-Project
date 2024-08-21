@@ -85,8 +85,11 @@
           <span class="close" onclick="closeModalEndAula()">&times;</span>
           <input type="hidden" id="aulaId" value="" />
       
-          <h2 id="modalTitleEnd" class="title">teste</h2>
-          
+          <h2 id="modalTitleEnd" class="title"></h2>
+          <div class="centDate">
+            <span class="subtitle">Selecione a Data: </span>
+            <input type="date" id="data_ocorrencia" name="data_ocorrencia" required class="date" placeholder="DD/MM/AAAA">
+          </div>
           <div id="alunosList" class="aluno-Card">
             <!-- Este conteúdo será preenchido dinamicamente via JS -->
           </div>
@@ -127,7 +130,7 @@
                     <!-- Adicionando a checkbox para vincular o aluno -->
                     <div class="aluno-checkbox">
                       <label>
-                        <input type="checkbox" class="aluno-checkbox" name="alunos_vinculados" value='${aluno.id}'>
+                        <input type="checkbox" class="aluno-checkbox" name="alunos_vinculados" value='${aluno.id}' checked>
                       </label>
                     </div>
                   </div>
@@ -148,6 +151,13 @@
         var checkboxes = document.querySelectorAll('input[name="alunos_vinculados"]:checked');
         var alunosSelecionados = [];
         
+        var dataOcorrencia = document.getElementById('data_ocorrencia').value;
+
+    // Validar se uma data foi selecionada
+        if (!dataOcorrencia) {
+            alert('Por favor, selecione a data da aula.');
+            return;
+        }
         
         checkboxes.forEach((checkbox) => {
           alunosSelecionados.push(checkbox.value);
@@ -156,7 +166,8 @@
         // Enviar os dados dos alunos selecionados
         var data = {
           aula_id: aulaId,
-          alunos: alunosSelecionados
+          alunos: alunosSelecionados,
+          data_ocorrencia: dataOcorrencia
         };
       
         fetch('/tennisTracer/aula/presente/', {

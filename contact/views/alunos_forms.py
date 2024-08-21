@@ -165,22 +165,31 @@ def registrar_presenca(request):
         data = json.loads(request.body)
         aula_id = data.get('aula_id')
         alunos_ids = data.get('alunos', [])
-
+        data_ocorrencia = data.get('data_ocorrencia') 
         try:
             # Verificar se a aula existe
             aula = Aula.objects.get(id=aula_id)
             
-            # Para cada aluno selecionado, atualizar a presença
+            # Verificar se já existe uma ocorrência da aula na data informada
+            ocorrencia, created = OcorrenciaAula.objects.get_or_create(
+                aula=aula,
+                data=data_ocorrencia  # Data da aula
+            )
+
+            # Para cada aluno selecionado, atualizar ou criar a presença
             for aluno_id in alunos_ids:
-                aluno_aula = Aluno_Aula.objects.get(aula=aula, aluno_id=aluno_id)
-                aluno_aula.presente = True  # Supondo que você tenha um campo 'presente' no model
-                aluno_aula.save()
+                aluno_ocorrencia, aluno_created = Aluno_OcorrenciaAula.objects.get_or_create(
+                    aluno_id=aluno_id,
+                    ocorrenciaAula=ocorrencia
+                )
+                aluno_ocorrencia.presente = True  # Marcar a presença como verdadeira
+                aluno_ocorrencia.save()
 
             return JsonResponse({'status': 'success'})
 
         except Aula.DoesNotExist:
             return JsonResponse({'status': 'error', 'message': 'Aula não encontrada.'}, status=400)
-        except Aluno_Aula.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Aluno não encontrado.'}, status=400)
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
     return JsonResponse({'status': 'error', 'message': 'Método inválido.'}, status=400)
